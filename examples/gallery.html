@@ -94,6 +94,11 @@
             <a-gltf-model src="models/Go/blackstone.gltf" scale="0.4 0.4 0.4"></a-gltf-model>
           </a-entity>
         </template>
+        <template id="go-whitestone">
+          <a-entity>
+            <a-gltf-model src="models/Go/whitestone.gltf" scale="0.4 0.4 0.4"></a-gltf-model>
+          </a-entity>
+        </template>
 
         <template id="avatar-left-hand-template">
           <a-entity>
@@ -116,9 +121,9 @@
         position="0 1.2 0"
         spawn-in-circle="radius:2"
         movement-controls="speed:0.08;"
-        look-controls
+        look-controls="pointerLockEnabled: true"
       >
-        <a-entity camera look-controls="pointerLockEnabled: true">
+        <a-entity camera>
           <a-entity cursor="fuse: false"
             position="0 0 -0.1"
             geometry="primitive: ring; radiusInner: 0.0007; radiusOuter: 0.001"
@@ -145,8 +150,8 @@
         <a-entity light="type: spot; intensity: 5" rotation="-90 0 0" position="0 2 0"></a-entity>
       </a-gltf-model>
 
-      <a-gltf-model class="interactable" src="#go-blackbowl" scale="0.4 0.4 0.4" position="0.20821 0.76337 -1.88195" shadow="receive: false" static-body="" hoverable model-hover-highlight></a-gltf-model>
-      <a-gltf-model class="interactable" src="#go-whitebowl" scale="0.4 0.4 0.4" position="0.20821 0.76337 -2.38665" shadow="receive: false" static-body="" hoverable model-hover-highlight></a-gltf-model>
+      <a-gltf-model class="interactable" go-bowl-listener="black" src="#go-blackbowl" scale="0.4 0.4 0.4" position="0.20821 0.76337 -1.88195" shadow="receive: false" static-body=""></a-gltf-model>
+      <a-gltf-model class="interactable" go-bowl-listener="white" src="#go-whitebowl" scale="0.4 0.4 0.4" position="0.20821 0.76337 -2.38665" shadow="receive: false" static-body=""></a-gltf-model>
 
       <a-plane static-body rotation="-90 0 0" scale="30 30 1" material="opacity: 0.0; transparent: true"></a-plane>
 
@@ -197,24 +202,6 @@
               property: 'color'
             }
           ]
-        });
-
-        AFRAME.registerComponent('model-hover-highlight', {
-          init: function () {
-            this.el.addEventListener('mouseenter', this.sethighlight.bind(this, true));
-            this.el.addEventListener('mouseleave', this.sethighlight.bind(this, false));
-          },
-          sethighlight: function(highlight) {
-            var mesh = this.el.getObject3D('mesh');
-            if (!mesh) { return; }
-            mesh.traverse(function (node) {
-              if (node.isMesh && node.name.indexOf('Bowl') != -1) {
-                node.material.color.set(highlight ? 'yellow' : 'white');
-                node.material.transparent = highlight;
-                node.material.needsUpdate = true;
-              }
-            });
-          }
         });
 
         // Called by Networked-Aframe when connected to server
