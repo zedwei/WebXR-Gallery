@@ -2,9 +2,10 @@
   <head>
 
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
+    <!-- <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script src="https://unpkg.com/aframe-event-set-component@4.2.1/dist/aframe-event-set-component.min.js"></script> 
-    <script src="https://unpkg.com/super-hands@^3.0.1/dist/super-hands.min.js"></script>
+    <!-- <script src="https://unpkg.com/super-hands@^3.0.1/dist/super-hands.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.4.0/socket.io.slim.js"></script>
     <script src="/easyrtc/easyrtc.js"></script>
     <script src="https://unpkg.com/networked-aframe@^0.8.0/dist/networked-aframe.js"></script>
@@ -12,6 +13,8 @@
     <script src="/js/spawn-in-circle.component.js"></script>
     
     <!-- <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@4.0.1/dist/aframe-physics-system.min.js"></script> -->
+
+    <script src="js/gallery/go-board.js"></script>
 
   </head>
   <body>
@@ -24,12 +27,11 @@
         adapter: easyrtc;
         audio: true;
       "
-      physics
     >
       <a-assets timeout="100000">
         <a-asset-item id="room" src="models/room2/scene.gltf" animation-mixer=""></a-asset-item>
         <a-asset-item id="table" src="models/bar_table/table.gltf" animation-mixer=""></a-asset-item>
-        <a-asset-item id="go-table" src="models/Go/Go.gltf"></a-asset-item>
+        <a-asset-item id="go-board" src="models/Go/Go.gltf"></a-asset-item>
         <a-asset-item id="go-blackbowl" src="models/Go/BlackBowl.gltf"></a-asset-item>
         <a-asset-item id="go-whitebowl" src="models/Go/WhiteBowl.gltf"></a-asset-item>
 
@@ -87,9 +89,9 @@
           </a-entity>
         </template>
 
-        <template id="donut-template">
+        <template id="go-blackstone">
           <a-entity>
-            <a-gltf-model src="models/donut/Donut_Unity.gltf" animation-mixer="" scale="" dynamic-body="shape:convex; mass:1;"></a-gltf-model>
+            <a-gltf-model src="models/Go/blackstone.gltf" scale="0.4 0.4 0.4"></a-gltf-model>
           </a-entity>
         </template>
 
@@ -116,16 +118,12 @@
         movement-controls="speed:0.08;"
         look-controls
       >
-        <a-entity camera look-controls="pointerLockEnabled: true"
-          super-hands="colliderEvent: raycaster-intersection;
-          colliderEventProperty: els;
-          colliderEndEvent:raycaster-intersection-cleared;
-          colliderEndEventProperty: clearedEls;"
-        >
-          <a-entity cursor="fuse: true; fuseTimeout: 500"
+        <a-entity camera look-controls="pointerLockEnabled: true">
+          <a-entity cursor="fuse: false"
             position="0 0 -0.1"
             geometry="primitive: ring; radiusInner: 0.0007; radiusOuter: 0.001"
-            material="color: white; shader: flat">
+            material="color: white; shader: flat"
+            raycaster="objects: .interactable">
           </a-entity>
         </a-entity>
         <a-sphere class="head"
@@ -134,24 +132,21 @@
         ></a-sphere>
       </a-entity>
 
-      <a-entity id="lefthand" networked="template:#avatar-left-hand-template;attachTemplateToLocal:false;" hand-controls="hand: left;" position="0 -1 0">
-      </a-entity>
-        
-      <a-entity id="righthand" networked="template:#avatar-right-hand-template;attachTemplateToLocal:false;" hand-controls="hand: right;" position="0 -1 0">
-      </a-entity>
-
+      <a-entity id="lefthand" networked="template:#avatar-left-hand-template;attachTemplateToLocal:false;" hand-controls="hand: left;" position="0 -1 0"></a-entity>
+      <a-entity id="righthand" networked="template:#avatar-right-hand-template;attachTemplateToLocal:false;" hand-controls="hand: right;" position="0 -1 0"></a-entity>
   
       <a-entity light="type: ambient; color: #BBB; intensity: 10.0"></a-entity>
       <a-entity light="intensity: 2; castShadow: true; shadowCameraFar: 20; " position="7.49473 4.86954 0.29084"></a-entity>
 
+
       <a-gltf-model src="#room" animation-mixer=""></a-gltf-model>
       <a-gltf-model src="#table" scale="0.015 0.015 0.015" position="0.208 0.5 -2.13474" shadow="" static-body></a-gltf-model>
-      <a-gltf-model src="#go-table" scale="0.4 0.4 0.4" position="0.20821 0.71017 -2.1333" shadow="receive: false" static-body="">
+      <a-gltf-model class="interactable" src="#go-board" scale="0.4 0.4 0.4" position="0.20821 0.71017 -2.1333" shadow="receive: false" static-body="" go-board-listener>
         <a-entity light="type: spot; intensity: 5" rotation="-90 0 0" position="0 2 0"></a-entity>
       </a-gltf-model>
 
-      <a-gltf-model src="#go-blackbowl" scale="0.4 0.4 0.4" position="0.20821 0.76337 -1.88195" shadow="receive: false" static-body="" hoverable model-hover-highlight></a-gltf-model>
-      <a-gltf-model src="#go-whitebowl" scale="0.4 0.4 0.4" position="0.20821 0.76337 -2.38665" shadow="receive: false" static-body="" hoverable model-hover-highlight></a-gltf-model>
+      <a-gltf-model class="interactable" src="#go-blackbowl" scale="0.4 0.4 0.4" position="0.20821 0.76337 -1.88195" shadow="receive: false" static-body="" hoverable model-hover-highlight></a-gltf-model>
+      <a-gltf-model class="interactable" src="#go-whitebowl" scale="0.4 0.4 0.4" position="0.20821 0.76337 -2.38665" shadow="receive: false" static-body="" hoverable model-hover-highlight></a-gltf-model>
 
       <a-plane static-body rotation="-90 0 0" scale="30 30 1" material="opacity: 0.0; transparent: true"></a-plane>
 
@@ -206,8 +201,8 @@
 
         AFRAME.registerComponent('model-hover-highlight', {
           init: function () {
-            this.el.addEventListener('hover-start', this.sethighlight.bind(this, true));
-            this.el.addEventListener('hover-end', this.sethighlight.bind(this, false));
+            this.el.addEventListener('mouseenter', this.sethighlight.bind(this, true));
+            this.el.addEventListener('mouseleave', this.sethighlight.bind(this, false));
           },
           sethighlight: function(highlight) {
             var mesh = this.el.getObject3D('mesh');
@@ -234,7 +229,6 @@
           });
         }
       </script>
-
     </a-scene>
   </body>
 </html>
