@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+        <div style="position: absolute; bottom: 0px;">
+            <video class="input_video"></video>
+            <canvas class="output_canvas" width="640px" height="360px"></canvas>
+        </div>
+        <script src="js/handtracking/handtracking.js"></script>
+        <a-scene>
+            <a-assets>
+            </a-assets>
+
+            <a-entity camera look-controls wasd-controls="acceleration: 10" position="0 0 1">
+            </a-entity>
+            
+            <a-box id="left-hand-0" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-1" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-2" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-3" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-4" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-5" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-6" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-7" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-8" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-9" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-10" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-11" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-12" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-13" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-14" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-15" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-16" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-17" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-18" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-19" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+            <a-box id="left-hand-20" height="0.015" width="0.015" depth="0.015" material="color:red;"></a-box>
+
+            <a-box id="right-hand-0" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-1" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-2" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-3" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-4" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-5" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-6" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-7" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-8" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-9" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-10" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-11" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-12" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-13" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-14" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-15" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-16" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-17" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-18" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-19" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+            <a-box id="right-hand-20" height="0.015" width="0.015" depth="0.015" material="color:blue;"></a-box>
+
+            <a-box id="left-hand-palm" height="0.015" width="0.015" depth="0.015" material="color:purple;"></a-box>
+            <a-box id="right-hand-palm" height="0.015" width="0.015" depth="0.015" material="color:purple;"></a-box>
+        </a-scene>
+    </body>
+</html>
+
