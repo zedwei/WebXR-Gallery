@@ -41,10 +41,10 @@
 
       <a-entity id="player"
         networked="template:#avatar-template;attachTemplateToLocal:false;"
-        position="0 0 0"
+        position="0 1.2 0"
         movement-controls="speed:0.08; constrainToNavMesh: true"
       >
-        <a-entity camera position="0 1.2 0"
+        <a-entity camera position="0 0 0"
             look-controls="pointerLockEnabled: true"
         >
           <a-entity cursor="fuse: false"
@@ -61,7 +61,7 @@
       </a-entity>
       <a-entity light="color: #BBB; type: ambient; intensity: 5" data-aframe-default-light="" aframe-injected=""></a-entity>
       <a-gltf-model src="#home" position="0 1.8 0" shadow="" static-body></a-gltf-model>
-      <a-entity gltf-model="#home-nav-mesh" nav-mesh position="0 1.0 0" visible="false"></a-entity>
+      <a-entity gltf-model="#home-nav-mesh" nav-mesh position="0 2.2 0" visible="false"></a-entity>
 
       <script>
         // On mobile remove elements that are resource heavy
