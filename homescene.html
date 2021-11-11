@@ -13,10 +13,11 @@
       renderer="colorManagement: true; physicallyCorrectLights: true;" 
       inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"
       networked-scene="
-        room: basic-audio;
+        room: home-audio-video;
         debug: true;
         adapter: easyrtc;
         audio: true;
+        video: true;
       "
       inspector-plugin-recast
     >
@@ -26,15 +27,9 @@
         <!-- Avatar -->
         <template id="avatar-template">
           <a-entity class="avatar" networked-audio-source scale="0.8 0.8 0.8">
-            <a-sphere class="head" scale="0.45 0.5 0.4"></a-sphere>
-            <a-entity class="face" position="0 0.05 0">
-              <a-sphere class="eye" color="#efefef" position="0.16 0.1 -0.35" scale="0.12 0.12 0.12">
-                <a-sphere class="pupil" color="#000" position="0 0 -1" scale="0.2 0.2 0.2"></a-sphere>
-              </a-sphere>
-              <a-sphere class="eye" color="#efefef" position="-0.16 0.1 -0.35" scale="0.12 0.12 0.12">
-                <a-sphere class="pupil" color="#000" position="0 0 -1" scale="0.2 0.2 0.2"></a-sphere>
-              </a-sphere>
-            </a-entity>
+            <a-box class="head" scale="0.5 0.5 0.5">
+              <a-plane position="0 0 -0.52" rotation="0 180 0" networked-video-source></a-plane>
+            </a-box>
           </a-entity>
         </template>
       </a-assets>
@@ -53,10 +48,10 @@
             raycaster="objects: .interactable">
           </a-entity>
         </a-entity>
-        <a-sphere class="head"
+        <a-box class="head"
           visible="false"
           random-color
-        ></a-sphere>
+        ></a-box>
       </a-entity>
       <a-entity light="color: #BBB; type: ambient; intensity: 5" data-aframe-default-light="" aframe-injected=""></a-entity>
       <a-gltf-model src="#home" position="0 1.8 0" shadow="" static-body></a-gltf-model>

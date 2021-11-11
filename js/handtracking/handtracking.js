@@ -20,21 +20,24 @@ function onResults(results) {
         let handIndex = 0;
         const leftPalm = document.getElementById('left-hand-palm');
         const rightPalm = document.getElementById('right-hand-palm');
-        for (let handIndex=0; handIndex < results.multiHandWorldLandmarks.length; handIndex++) {
-            const landmarks = results.multiHandWorldLandmarks[handIndex];
-            let handLabel = results.multiHandedness[handIndex].label;
-            let offset = handLabel == 'Left' ? rightPalm.getAttribute('position') : leftPalm.getAttribute('position');
+        if (leftPalm && rightPalm)
+        {
+            for (let handIndex=0; handIndex < results.multiHandWorldLandmarks.length; handIndex++) {
+                const landmarks = results.multiHandWorldLandmarks[handIndex];
+                let handLabel = results.multiHandedness[handIndex].label;
+                let offset = handLabel == 'Left' ? rightPalm.getAttribute('position') : leftPalm.getAttribute('position');
 
-            for (let i=0; i<landmarks.length; i++)
-            {
-                const id = (handLabel == 'Left' ? 'left-hand-' : 'right-hand-') + i.toString();
-                let box = document.getElementById(id);
-                if (box)
+                for (let i=0; i<landmarks.length; i++)
                 {
-                    box.setAttribute("position", {
-                        x: -(landmarks[i].x - landmarks[0].x) + offset.x, 
-                        y: -(landmarks[i].y - landmarks[0].y) + offset.y, 
-                        z: landmarks[i].z - landmarks[0].z + offset.z});
+                    const id = (handLabel == 'Left' ? 'left-hand-' : 'right-hand-') + i.toString();
+                    let box = document.getElementById(id);
+                    if (box)
+                    {
+                        box.setAttribute("position", {
+                            x: -(landmarks[i].x - landmarks[0].x) + offset.x, 
+                            y: -(landmarks[i].y - landmarks[0].y) + offset.y, 
+                            z: landmarks[i].z - landmarks[0].z + offset.z});
+                    }
                 }
             }
         }
@@ -54,18 +57,24 @@ function onResultsPose(results) {
     canvasCtx.restore();
     if (results.poseWorldLandmarks) {
         let box = document.getElementById('left-hand-palm');
-        box.setAttribute("position", {
-            x: -results.poseWorldLandmarks[15].x,
-            y: -results.poseWorldLandmarks[15].y,
-            z: results.poseWorldLandmarks[15].z,
-        });
+        if (box)
+        {
+            box.setAttribute("position", {
+                x: -results.poseWorldLandmarks[15].x,
+                y: -results.poseWorldLandmarks[15].y,
+                z: results.poseWorldLandmarks[15].z,
+            });
+        }
 
         box = document.getElementById('right-hand-palm');
-        box.setAttribute("position", {
-            x: -results.poseWorldLandmarks[16].x,
-            y: -results.poseWorldLandmarks[16].y,
-            z: results.poseWorldLandmarks[16].z,
-        });
+        if (box)
+        {
+            box.setAttribute("position", {
+                x: -results.poseWorldLandmarks[16].x,
+                y: -results.poseWorldLandmarks[16].y,
+                z: results.poseWorldLandmarks[16].z,
+            });
+        }
     }
 }
 
