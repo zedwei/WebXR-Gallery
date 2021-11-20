@@ -1,0 +1,8 @@
+Model Information:
+* title:	Diamond Residence
+* source:	https://sketchfab.com/3d-models/diamond-residence-5448b0c6675a4fc5a48083d8750f48c2
+* author:	VRA (https://sketchfab.com/architect47)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works
