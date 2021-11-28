@@ -8,10 +8,13 @@
     <script src="https://unpkg.com/networked-aframe@^0.8.0/dist/networked-aframe.js"></script>
     <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
     <script src="/js/spawn-in-circle.component.js"></script>
-    <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
+    <script src="/js/billboard.js"></script>
+    <script src="/js/webcam.js"></script>
+
   </head>
   <body>
     <a-scene 
+      class="scene"
       renderer="colorManagement: true; physicallyCorrectLights: true;" 
       inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"
       networked-scene="
@@ -21,25 +24,26 @@
         audio: true;
         video: true;
       "
-      inspector-plugin-recast
     >
       <a-assets timeout="100000">
+        <!-- House model and Navmesh -->
         <a-asset-item id="house" src="models/housegltf/house.glb" animation-mixer=""></a-asset-item>
         <a-asset-item id="home-nav-mesh" src="models/housegltf/navmesh.gltf"></a-asset-item>
+        
         <!-- Avatar -->
         <template id="avatar-template">
-          <a-entity class="avatar" networked-audio-source scale="0.8 0.8 0.8">
-            <a-box class="head" scale="0.5 0.5 0.5">
-              <a-plane position="0 0 -0.52" rotation="0 180 0" networked-video-source></a-plane>
+          <a-entity class="avatar" networked-audio-source>
+            <a-box class="head" height="0.96" width="1.28" depth="0.4">
+              <a-plane position="0 0 -0.21" rotation="0 180 0" height="0.96" width="1.28" networked-video-source></a-plane>
             </a-box>
+            <a-entity class="nickname" text="value: Player; align: center; width: 5;" position="0 0.8 0" rotation="0 0 0" billboard></a-entity>
           </a-entity>
         </template>
 
-        
+        <video id="webcam" playsinline></video>
       </a-assets>
 
-
-      
+      <!-- Player entity -->
       <a-entity id="player"
         networked="template:#avatar-template;attachTemplateToLocal:false;"
         position="-4 1 -17.6"
@@ -47,7 +51,8 @@
         movement-controls="speed:0.2; constrainToNavMesh: true"
         look-controls="pointerLockEnabled: true"
       >
-        <a-entity camera>
+        <!-- Camera -->
+        <a-entity camera position="0 0.12 0">
           <a-entity cursor="fuse: false"
             position="0 0 -0.1"
             geometry="primitive: ring; radiusInner: 0.0007; radiusOuter: 0.001"
@@ -55,22 +60,34 @@
             raycaster="objects: .interactable">
           </a-entity>
         </a-entity>
+
+        <!-- Head -->
         <a-box class="head"
           visible="false"
           random-color
         ></a-box>
+
+        <!-- nick name tag -->
+        <a-entity class="nickname" text="value: Player2;" visible="false"  ></a-entity>
+
+        <!-- Self video stream -->
+        <a-plane position="-0.12 0.07 -0.1" height="0.048" width="0.064" material="src: #webcam"></a-plane>
       </a-entity>
 
+      <!-- Skybox -->
       <a-sky color="#6EBAA7"></a-sky>
+
+      <!-- Lights -->
       <a-entity light="type: ambient; color: #BBB; intensity: 3.0"></a-entity>
       <a-entity light="type: directional; intensity: 1; castShadow: true; " position="7.49473 4.86954 0.29084"></a-entity>
       <a-entity light="type: point; castShadow: false; intensity: 1;" position="1.6948 3.02241 -4.43528"></a-entity>
       
+      <!-- House and Navmesh entity -->
       <a-gltf-model src="#house" shadow="cast:true"></a-gltf-model>
       <a-entity gltf-model="#home-nav-mesh" nav-mesh position="0 1.2 0" visible="false"></a-entity>
       
       <script>
-        // Define custom schema for syncing avatar color, set by random-color
+        // Define custom schema for syncing avatar color and nickname text value
         NAF.schemas.add({
           template: '#avatar-template',
           components: [
@@ -80,11 +97,36 @@
               selector: '.head',
               component: 'material',
               property: 'color'
+            },
+            {
+              selector: '.nickname',
+              component: 'text',
+              property: 'value'
             }
           ]
         });
       </script>
     </a-scene>
+
+    <script>
+      // Parse query string to get nick name
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+
+      const room = urlParams.get('room');
+      if (room)
+      {
+        const scene = document.querySelector('.scene');
+        scene.setAttribute('networked-scene', {'room': room});
+      }
+      
+      const nickname = urlParams.get('nickname');
+      if (nickname)
+      {
+        const nnEntity = document.querySelector('.nickname');
+        nnEntity.setAttribute('text', {'value': nickname});
+      }
+  </script>
   </body>
 </html>
 
