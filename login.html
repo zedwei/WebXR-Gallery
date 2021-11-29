@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html class="h-100">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -7,28 +7,64 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
             integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
-    <body>
-        <div class="h-100 w-100">
+    <body class="h-100">
+        <div class="h-100">
             <div class="row h-100">
                 <div class="card border-dark mx-auto my-auto" style="width: 500px;">
                     <div class="card-header">
                         <h5 class="card-title" style="margin:auto">
-                            Log in / 登入
+                            Log in | 登入
                         </h5>
                     </div>
                     <div class="card-body">
-                        <form method="post">
-                            <label>Nickname / 昵称</label>
-                            <input class="form-control" placeholder="Enter nickname here / 在此输入昵称">
+                        <label>Nickname | 昵称</label>
+                        <input id="nickname" class="form-control" placeholder="Enter nickname here | 在此输入昵称">
+                        <p id='nickname_warning' class="text-danger" style="display:none;"> Nickname cannot be empty | 昵称不能为空</p><br>
 
-                            <label class="mt-4">Room / 房间名</label>
-                            <input class="form-control" placeholder="Enter room here / 在此输入房间名">
+                        <label class="mt-4">Room | 房间名</label>
+                        <input id="roomname" class="form-control" placeholder="Enter room here | 在此输入房间名">
+                        <p id='roomname_warning' class="text-danger" style="display:none;"> Room cannot be empty | 房间名不能为空</p>
 
-                            <button type="submit" class="btn btn-primary btn-block mt-3"> Log in</button>
-                        </form>
+                        <button class="btn btn-primary btn-block mt-3" onclick="login();">Log in 登入</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <script>
+            // Parse query string to get nick name
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+
+            const room = urlParams.get('room');
+            if (room)
+            {
+                const roomName = document.querySelector('#roomname');
+                roomName.setAttribute('value', room);
+            }
+
+            function login() {
+                const nicknameWarning = document.querySelector('#nickname_warning');
+                const roomnameWarning = document.querySelector('#roomname_warning');
+
+                // const nickname = document.querySelector('#nickname').getAttribute('value');
+                const nickname = document.querySelector('#nickname').value;
+                if (nickname)
+                    nicknameWarning.setAttribute('style', 'display: none');
+                else
+                    nicknameWarning.setAttribute('style', 'display: inline');
+
+                const room = document.querySelector('#roomname').value;
+                if (room)
+                    roomnameWarning.setAttribute('style', 'display: none');
+                else
+                    roomnameWarning.setAttribute('style', 'display: inline');
+
+                if (nickname && room)
+                {
+                    window.location.href = `meeting.html?nickname=${nickname}&room=${room}`;
+                }
+            }
+        </script>
     </body>
 </html>

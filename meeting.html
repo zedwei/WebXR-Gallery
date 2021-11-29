@@ -41,12 +41,15 @@
         </template>
 
         <video id="webcam" playsinline></video>
+
+        <img id="instruction-en-image" src="imgs/instruction_en.png">
+        <img id="instruction-zh-image" src="imgs/instruction_zh.png">
       </a-assets>
 
       <!-- Player entity -->
       <a-entity id="player"
         networked="template:#avatar-template;attachTemplateToLocal:false;"
-        position="-4 1 -17.6"
+        position="-4 1 -22"
         rotation="0 -143 0"
         movement-controls="speed:0.2; constrainToNavMesh: true"
         look-controls="pointerLockEnabled: true"
@@ -76,6 +79,10 @@
 
       <!-- Skybox -->
       <a-sky color="#6EBAA7"></a-sky>
+
+      <!-- Instructions -->
+      <a-image src="#instruction-en-image" position="-5.2 1.4 -24" width="2.147" height="1.393" billboard></a-image>
+      <a-image src="#instruction-zh-image" position="-2.8 1.4 -24" width="2.147" height="1.393" billboard></a-image>
 
       <!-- Lights -->
       <a-entity light="type: ambient; color: #BBB; intensity: 3.0"></a-entity>
